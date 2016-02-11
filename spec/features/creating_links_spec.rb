@@ -19,4 +19,13 @@ feature 'user can add links' do
     expect(link.tags.map(&:name)).to include('Coding')
   end
 
+  scenario 'can add multiple tags to a new link' do
+    visit '/links/new'
+    fill_in('Link', with: 'http://www.makersacademy.com/')
+    fill_in('Title', with: 'Makers Academy')
+    fill_in('Tags', with: 'education ruby')
+    click_button('Submit')
+    link = Link.first
+    expect(link.tags.map(&:name)).to include('education', 'ruby')
+  end
 end
